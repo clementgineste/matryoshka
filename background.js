@@ -1,18 +1,22 @@
 // Matryoshka — background service worker
 // Listens to native tabGroups events and relays them to the sidebar.
 
-browser.tabGroups.onCreated.addListener((group) => {
-  notifySidebar("group-created", group);
-});
+function setupTabGroupListeners() {
+  if (!browser.tabGroups) return;
 
-browser.tabGroups.onRemoved.addListener((group) => {
-  removeGroupFromStorage(group.id);
-  notifySidebar("group-removed", group);
-});
+  browser.tabGroups.onCreated.addListener((group) => {
+    notifySidebar("group-created", group);
+  });
 
-browser.tabGroups.onUpdated.addListener((group) => {
-  notifySidebar("group-updated", group);
-});
+  browser.tabGroups.onRemoved.addListener((group) => {
+    removeGroupFromStorage(group.id);
+    notifySidebar("group-removed", group);
+  });
+
+  browser.tabGroups.onUpdated.addListener((group) => {
+    notifySidebar("group-updated", group);
+  });
+}
 
 async function removeGroupFromStorage(groupId) {
   const { superGroups = [] } = await browser.storage.local.get("superGroups");
@@ -34,3 +38,5 @@ function notifySidebar(type, data) {
     // Sidebar not open — ignore
   });
 }
+
+setupTabGroupListeners();

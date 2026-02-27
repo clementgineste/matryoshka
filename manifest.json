@@ -8,8 +8,10 @@
     "48": "icons/icon-48.png"
   },
   "permissions": [
-    "tabGroups",
     "storage"
+  ],
+  "optional_permissions": [
+    "tabGroups"
   ],
   "background": {
     "scripts": ["background.js"]
