@@ -26,10 +26,10 @@ jobs:
 
       - name: Update beta pre-release
         run: |
-          gh release delete beta --yes 2>/dev/null || true
-          git tag -f beta
-          git push origin beta --force
-          gh release create beta \
+          gh release delete beta-latest --yes 2>/dev/null || true
+          git tag -f beta-latest
+          git push origin refs/tags/beta-latest --force
+          gh release create beta-latest \
             web-ext-artifacts/matryoshka-beta.xpi \
             --title "Beta (latest)" \
             --notes "Rolling beta build from the \`beta\` branch.

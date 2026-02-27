@@ -34,7 +34,7 @@ Matryoshka replaces Firefox's vertical tabs with a sidebar that lets you organiz
 Download the latest `.xpi` from [Releases](https://github.com/clementgineste/matryoshka/releases/latest), then open `about:addons` in Firefox → gear icon → **"Install Add-on From File"**.
 
 ### Beta
-Download `matryoshka-beta.xpi` from the [Beta pre-release](https://github.com/clementgineste/matryoshka/releases/tag/beta). This is a rolling build from the `beta` branch — expect bugs.
+Download `matryoshka-beta.xpi` from the [Beta pre-release](https://github.com/clementgineste/matryoshka/releases/tag/beta-latest). This is a rolling build from the `beta` branch — expect bugs.
 
 ### Dev mode
 1. Open `about:debugging#/runtime/this-firefox` in Firefox
