@@ -1,13 +1,12 @@
 // Matryoshka — sidebar rendering and state
-
 const tree = document.getElementById("tree");
 const btnAdd = document.getElementById("btn-add");
 
 let superGroups = [];
-let ffGroups = [];   // cached from tabGroups.query
-let ffTabs = {};     // groupId -> [tab, ...]
+let ffGroups = [];
+let ffTabs = {};
+let looseTabs = [];
 
-// ── Bootstrap ──────────────────────────────────────────
 
 async function init() {
   const data = await browser.storage.local.get("superGroups");
@@ -17,18 +16,14 @@ async function init() {
 }
 
 async function refreshFFData() {
-  try {
-    ffGroups = await browser.tabGroups.query({});
-  } catch {
-    ffGroups = [];
-  }
+  try { ffGroups = await browser.tabGroups.query({}); }
+  catch { ffGroups = []; }
   ffTabs = {};
-  const allTabs = await browser.tabs.query({});
-  for (const tab of allTabs) {
+  looseTabs = [];
+  for (const tab of await browser.tabs.query({ currentWindow: true })) {
     const gid = tab.groupId ?? -1;
-    if (gid === -1) continue;
-    if (!ffTabs[gid]) ffTabs[gid] = [];
-    ffTabs[gid].push(tab);
+    if (gid === -1) { looseTabs.push(tab); }
+    else { (ffTabs[gid] ??= []).push(tab); }
   }
 }
 
@@ -36,7 +31,6 @@ async function save() {
   await browser.storage.local.set({ superGroups });
 }
 
-// ── Render ─────────────────────────────────────────────
 
 function render() {
   tree.innerHTML = "";
@@ -50,10 +44,20 @@ function render() {
   if (ungrouped.length) {
     const div = document.createElement("div");
     div.className = "ungrouped-divider";
-    div.textContent = "Ungrouped";
+    div.textContent = "Ungrouped groups";
     tree.appendChild(div);
     for (const g of ungrouped) {
       tree.appendChild(buildFFGroup(g, null));
+    }
+  }
+
+  if (looseTabs.length) {
+    const div = document.createElement("div");
+    div.className = "ungrouped-divider";
+    div.textContent = "Tabs";
+    tree.appendChild(div);
+    for (const tab of looseTabs) {
+      tree.appendChild(buildTab(tab));
     }
   }
 }
@@ -186,7 +190,6 @@ function buildTab(tab) {
   return el;
 }
 
-// ── Messages from background ───────────────────────────
 
 browser.runtime.onMessage.addListener(async (msg) => {
   if (["group-created", "group-removed", "group-updated"].includes(msg.type)) {
@@ -194,5 +197,3 @@ browser.runtime.onMessage.addListener(async (msg) => {
     render();
   }
 });
-
-// init() is called from sidebar.html after all scripts load
