@@ -28,10 +28,17 @@ Matryoshka replaces Firefox's vertical tabs with a sidebar that lets you organiz
 - **Real-time sync** — reflects native tab group changes instantly
 - **Persistent** — Super Groups survive browser restarts
 
-## Install (dev mode)
+## Install
 
-1. Open `about:debugging` in Firefox
-2. Click **"This Firefox"** → **"Load Temporary Add-on"**
+### Stable
+Download the latest `.xpi` from [Releases](https://github.com/clementgineste/matryoshka/releases/latest), then open `about:addons` in Firefox → gear icon → **"Install Add-on From File"**.
+
+### Beta
+Download `matryoshka-beta.xpi` from the [Beta pre-release](https://github.com/clementgineste/matryoshka/releases/tag/beta). This is a rolling build from the `beta` branch — expect bugs.
+
+### Dev mode
+1. Open `about:debugging#/runtime/this-firefox` in Firefox
+2. Click **"Load Temporary Add-on"**
 3. Select `manifest.json` from this repo
 
 ## Why a separate sidebar?

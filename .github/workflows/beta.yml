@@ -1,0 +1,42 @@
+name: Beta
+
+on:
+  push:
+    branches: [beta]
+
+jobs:
+  beta-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install -g web-ext
+
+      - name: Lint
+        run: web-ext lint
+
+      - name: Build .xpi
+        run: web-ext build --filename matryoshka-beta.xpi
+
+      - name: Update beta pre-release
+        run: |
+          gh release delete beta --yes 2>/dev/null || true
+          git tag -f beta
+          git push origin beta --force
+          gh release create beta \
+            web-ext-artifacts/matryoshka-beta.xpi \
+            --title "Beta (latest)" \
+            --notes "Rolling beta build from the \`beta\` branch.
+
+          Built from commit ${{ github.sha }}.
+
+          **This is a pre-release** — expect bugs." \
+            --prerelease
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
