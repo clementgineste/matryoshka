@@ -64,6 +64,15 @@ Replace Firefox's vertical tabs with a richer sidebar that organizes native tab 
 
 ---
 
+## Known Limitations
+
+**Separate sidebar** — WebExtensions cannot modify Firefox's internal chrome UI. The `sidebar_action` API only allows creating a standalone sidebar panel, not injecting into the native vertical tabs panel. Matryoshka therefore runs as its own sidebar, replacing vertical tabs rather than extending them.
+
+If Firefox exposes a sidebar integration API in the future, revisit:
+- [WebExtensions API reference](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API)
+- [Add-ons blog](https://blog.mozilla.org/addons/)
+- [Firefox release notes](https://www.mozilla.org/en-US/firefox/releases/)
+
 ## Non-goals (v1)
 - No tab search
 - No automatic sorting

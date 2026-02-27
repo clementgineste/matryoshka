@@ -34,6 +34,12 @@ Matryoshka replaces Firefox's vertical tabs with a sidebar that lets you organiz
 2. Click **"This Firefox"** → **"Load Temporary Add-on"**
 3. Select `manifest.json` from this repo
 
+## Why a separate sidebar?
+
+Ideally, Matryoshka would integrate directly into Firefox's native vertical tabs sidebar. However, the WebExtensions API does not allow extensions to modify the browser's internal UI (chrome UI). Extensions can only create their own sidebar panel via `sidebar_action` — they cannot inject into or alter existing native panels.
+
+If Firefox ever exposes an API for this (track [WebExtensions API updates](https://blog.mozilla.org/addons/) and [Firefox release notes](https://www.mozilla.org/en-US/firefox/releases/)), the extension could be reworked to embed directly into the vertical tabs panel.
+
 ## Tech
 
 - Manifest V3 (WebExtensions)
