@@ -3,7 +3,7 @@
 *Super Groups for your Firefox tabs*
 
 ## Goal
-Allow users to organize their native Firefox tab groups into **Super Groups**, displayed in the sidebar.
+Replace Firefox's vertical tabs with a richer sidebar that organizes native tab groups into **Super Groups**. Matryoshka is the user's primary tab manager.
 
 ---
 
