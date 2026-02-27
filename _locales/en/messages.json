@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "Matryoshka"
+  },
+  "extensionDescription": {
+    "message": "Super Groups for your Firefox tabs"
+  },
+  "sidebarTitle": {
+    "message": "Matryoshka"
+  }
+}
